@@ -1,0 +1,20 @@
+### DELETE request - Check response status, headers, and content-type
+
+DELETE https://jsonplaceholder.typicode.com/todos/201
+Content-Type: application/json
+
+{
+  "id": 999,
+  "value": "content"
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+%}

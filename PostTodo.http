@@ -1,0 +1,27 @@
+### POST request - Check response status, headers, and content-type
+
+POST https://jsonplaceholder.typicode.com/todos/
+Content-Type: application/json
+
+{
+  "title": "NewTodoTest",
+  "completed": true
+}
+
+> {%
+    client.test("Request executed successfully", function() {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+
+    client.test("Response content-type is json", function() {
+        var type = response.contentType.mimeType;
+        client.assert(type === "application/json", "Expected 'application/json' but received '" + type + "'");
+    });
+
+    client.test("Test response body", function(assert) {
+        client.assert(response.body.hasOwnProperty("title"), "Cannot find 'title' option in response");
+        client.assert(response.body.title === "NewTodoTest", "The value of 'title' property is not as expected");
+        client.assert(response.body.hasOwnProperty("completed"), "Cannot find 'title' option in response");
+        client.assert(response.body.completed === true, "The value of 'title' property is not as expected");
+    });
+ %}
