@@ -1,0 +1,8 @@
+### Delete a product without providing a bearer token
+DELETE {{url}}/products/{{ProductId}}
+Content-Type: application/json
+
+> {%
+    import '../../Assertions/Unauthorized'
+%}
+###

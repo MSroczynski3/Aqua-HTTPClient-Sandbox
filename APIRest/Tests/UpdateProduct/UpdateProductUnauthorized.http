@@ -1,0 +1,24 @@
+### Update a product without providing a bearer token
+PUT {{url}}/products/{{ProductId}}
+Content-Type: application/json
+
+{
+  "title": "UpdatedTitle",
+  "description": "The product updated by the QA guy",
+  "price": 60,
+  "discountPercentage": 10,
+  "rating": 4.25,
+  "stock": 125,
+  "brand": "YIOSI",
+  "category": "lighting",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/100/thumbnail.jpg",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/100/DOC.jpg",
+    "https://cdn.dummyjson.com/product-images/100/PLANNER.jpg"
+  ]
+}
+
+> {%
+    import '../../Assertions/Unauthorized'
+%}
+###

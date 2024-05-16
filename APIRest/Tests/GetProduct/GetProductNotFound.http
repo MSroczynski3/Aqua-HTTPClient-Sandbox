@@ -1,0 +1,10 @@
+### Get a product that does not exist
+GET {{url}}/products/{{ProductNotFoundId}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+
+> {%
+    import '../../Assertions/NotFound'
+%}
+###

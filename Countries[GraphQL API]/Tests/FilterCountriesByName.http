@@ -1,0 +1,23 @@
+### Filter countries by name
+GRAPHQL {{url}}/graphql
+
+query ($name: String!) {
+    countries(filter: { name: { eq: $name } }) {
+        name
+        code
+        currency
+    }
+}
+
+{
+  "name": "{{name}}"
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    let name = request.environment.get("name");
+    client.test("The country data match the requested country code", () => {
+        client.assert(response.body.data.countries[0].name === name, "The country name should be " + name + "!");
+    });
+%}
+###

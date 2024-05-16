@@ -1,0 +1,14 @@
+### Refresh the token
+POST {{url}}/auth/refresh
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+ {
+     "expiresInMins": 60
+ }
+
+> {%
+    import '../../Assertions/Success'
+    client.global.set("auth_token", response.body.auth_token);
+%}
+###

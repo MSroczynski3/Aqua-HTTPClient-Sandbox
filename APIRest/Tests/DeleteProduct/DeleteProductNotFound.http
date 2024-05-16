@@ -1,0 +1,9 @@
+### Delete a product that does not exist
+DELETE {{url}}/products/{{ProductNotFoundId}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+> {%
+    import '../../Assertions/NotFound'
+%}
+###

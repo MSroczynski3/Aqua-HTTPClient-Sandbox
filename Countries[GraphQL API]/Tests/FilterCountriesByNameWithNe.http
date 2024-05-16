@@ -1,0 +1,18 @@
+### Filter countries by name using ne operator
+GRAPHQL {{url}}/graphql
+
+{
+  countries(filter: { name: { ne: "Brazil" } }) {
+    name
+    code
+    currency
+  }
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    client.test("The list of countries does not contain Brazil", () => {
+        client.assert(response.body.data.countries.every(country => country.name !== 'Brazil') === true, "The list of countries should not contain Brazil");
+    });
+%}
+###

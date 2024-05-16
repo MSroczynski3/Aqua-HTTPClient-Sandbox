@@ -1,0 +1,22 @@
+### Update a product with bad data
+PUT {{url}}/products/{{ProductId}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "",
+  "price": -5,
+  "discountPercentage": -5,
+  "rating": -5,
+  "stock": -5,
+  "brand": "",
+  "category": "",
+  "thumbnail": "",
+  "images": []
+}
+
+> {%
+    import '../../Assertions/BadRequest'
+%}
+###

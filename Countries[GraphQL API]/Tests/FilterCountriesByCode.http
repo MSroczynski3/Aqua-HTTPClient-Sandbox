@@ -1,0 +1,26 @@
+### Filter countries by code
+GRAPHQL {{url}}/graphql
+
+query ($code: String!) {
+    countries(filter: { code: { eq: $code } }) {
+        name
+        code
+        currency
+    }
+}
+
+{
+  "code": "{{code}}"
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    let code = request.environment.get("code");
+    client.test("Exactly one country match is found", () => {
+        client.assert(response.body.data.countries.length == 1, "More than one country with request code was found!");
+    });
+    client.test("The country data match the requested country code", () => {
+        client.assert(response.body.data.countries[0].code === code, "The country code should be " + code + "!");
+    });
+%}
+###

@@ -1,0 +1,14 @@
+### Get a token from the server
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+     "username": "atuny0",
+     "password": "9uQFF1Lh",
+     "expiresInMins": 60
+}
+> {%
+    import '../../Assertions/Success'
+    client.global.set("auth_token", response.body.token);
+%}
+###

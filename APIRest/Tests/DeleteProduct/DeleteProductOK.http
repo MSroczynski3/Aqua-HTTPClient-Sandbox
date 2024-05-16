@@ -1,0 +1,23 @@
+### Delete a product
+DELETE {{url}}/products/{{ProductId}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+> {%
+    import '../../Assertions/Success'
+    client.test("The product is (marked as) deleted", () => {
+        client.assert(response.body.isDeleted == true, "The value of 'isDeleted' property is not as expected");
+        client.assert(response.body.deletedOn <= new Date().toUTCString(), "The value of 'deletedOn' property is not as expected");
+    });
+    client.global.set("Product_id", response.body.id);
+%}
+
+### Verify the product was deleted
+GET {{url}}/products/{{Product_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+> {%
+    import '../../Assertions/NotFound'
+%}
+###

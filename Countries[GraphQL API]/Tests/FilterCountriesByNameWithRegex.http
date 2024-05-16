@@ -1,0 +1,18 @@
+### Filter countries by name using regex
+GRAPHQL {{url}}/graphql
+
+{
+  countries(filter: { name: { regex: "^C" } }) {
+    code
+    name
+    currency
+  }
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    client.test("All country names starts with C", () =>  {
+        client.assert(response.body.data.countries.every(country => country.name.startsWith('C')) === true, "All country names should start with C!");
+    })
+%}
+###

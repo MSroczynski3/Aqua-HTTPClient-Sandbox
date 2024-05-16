@@ -1,0 +1,23 @@
+### Filter countries by currency
+GRAPHQL {{url}}/graphql
+
+query ($currency: String!) {
+    countries(filter: { currency: { eq: $currency } }) {
+        name
+        code
+        currency
+    }
+}
+
+{
+  "currency": "{{currency}}"
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    let currency = request.environment.get("currency");
+    client.test("All currencies are " + currency, () =>  {
+        client.assert(response.body.data.countries.every(country => country.currency === currency ) === true, "All countries currency should be " + currency + "!");
+    })
+%}
+###

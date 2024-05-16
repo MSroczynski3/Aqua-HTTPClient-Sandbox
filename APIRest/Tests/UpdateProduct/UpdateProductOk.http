@@ -1,0 +1,57 @@
+### Update a product
+PUT {{url}}/products/{{ProductId}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "title": "UpdatedTitle",
+  "description": "The product updated by the QA guy",
+  "price": 60,
+  "discountPercentage": 10,
+  "rating": 4.25,
+  "stock": 125,
+  "brand": "YIOSI",
+  "category": "lighting",
+  "thumbnail": "https://cdn.dummyjson.com/product-images/100/thumbnail.jpg",
+  "images": [
+    "https://cdn.dummyjson.com/product-images/100/DOC.jpg",
+    "https://cdn.dummyjson.com/product-images/100/PLANNER.jpg"
+  ]
+}
+
+> {%
+    import '../../Assertions/Success'
+    import '../../Assertions/ProductsDataIntegrity'
+    client.test("The response body matches the request body", () => {
+        client.assert(response.body.title === "UpdatedTitle", "The value of 'title' property is not as expected");
+        client.assert(response.body.description === "The product updated by the QA guy", "The value of 'description' property is not as expected");
+        client.assert(response.body.price === 60, "The value of 'price' property is not as expected");
+        client.assert(response.body.discountPercentage === 10, "The value of 'discountPercentage' property is not as expected");
+        client.assert(response.body.rating === 4.25, "The value of 'rating' property is not as expected");
+        client.assert(response.body.stock === 125, "The value of 'stock' property is not as expected");
+        client.assert(response.body.brand === "YIOSI", "The value of 'brand' property is not as expected");
+        client.assert(response.body.category === "lighting", "The value of 'category' property is not as expected");
+        client.assert(response.body.thumbnail === "https://cdn.dummyjson.com/product-images/100/thumbnail.jpg", "The value of 'thumbnail' property is not as expected");
+    });
+    client.test("The images array matches the request body", () => {
+        client.assert(response.body.images.length === 2, "The images array should contain 2 images");
+        client.assert(response.body.images.includes("https://cdn.dummyjson.com/product-images/100/DOC.jpg"), "Image URL 1 is not as expected");
+        client.assert(response.body.images.includes("https://cdn.dummyjson.com/product-images/100/PLANNER.jpg"), "Image URL 2 is not as expected");
+    })
+    client.global.set("Product_id", response.body.id);
+%}
+
+### Verify the updated product
+GET {{url}}/products/{{Product_id}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+> {%
+    import '../../Assertions/Success'
+    import '../../Assertions/ProductsDataIntegrity'
+    client.test("The updated created product data match the initial request", () => {
+        client.assert(response.body.title === "NewProduct", "The value of 'title' property should be 'NewProduct'");
+        // More assertions for updated product here...
+    });
+%}
+###

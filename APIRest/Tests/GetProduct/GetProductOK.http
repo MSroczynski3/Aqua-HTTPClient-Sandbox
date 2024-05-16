@@ -1,0 +1,10 @@
+### Get a product
+GET {{url}}/products/{{ProductId}}
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+> {%
+    import '../../Assertions/Success'
+    import '../../Assertions/ProductsDataIntegrity'
+%}
+###

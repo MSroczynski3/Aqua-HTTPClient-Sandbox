@@ -1,0 +1,18 @@
+### Filter countries by currency using $nin operator
+GRAPHQL {{url}}/graphql
+
+{
+  countries(filter: {currency: { nin: ["USD", "EUR"]}}) {
+    name
+    code
+    currency
+  }
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    client.test("All currencies are different than USD or EUR", () =>  {
+        client.assert(response.body.data.countries.every(country => country.currency !== 'USD' && country.currency !== 'EUR') === true, "All currencies should be different than USD or EUR!");
+    })
+%}
+###

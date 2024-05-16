@@ -1,0 +1,21 @@
+### Filter countries by currency and name
+GRAPHQL {{url}}/graphql
+
+{
+  countries(filter: { currency: { eq: "USD" }, name: { regex: "^U" } }) {
+    name
+    code
+    currency
+  }
+}
+
+> {%
+    import '../Helpers/CommonAssertions'
+    client.test("All currencies are USD", () =>  {
+        client.assert(response.body.data.countries.every(country => country.currency === 'USD') === true, "All countries currency should be USD!");
+    })
+    client.test("All country names starts with U", () =>  {
+        client.assert(response.body.data.countries.every(country => country.name.startsWith('U')) === true, "All country names should start with U!");
+    })
+%}
+###
